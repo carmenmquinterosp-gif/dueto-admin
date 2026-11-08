@@ -1,4 +1,21 @@
-<!DOCTYPE html>
+function doGet(e) {
+  try {
+    const action = e ? e.parameter.action : "";
+    const ss = SpreadsheetApp.openById("1MOBnfUjkMYzb1HupfOcE0LROdw1PA9vk8c3slCmxIgI");
+
+    if (action === "GET_ALL_DATA") {
+      const allData = fetchAllData(ss);
+      return ContentService.createTextOutput(JSON.stringify({ success: true, data: allData }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ success: true, status: "OK" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
